@@ -8,6 +8,7 @@ import Carousel from "./pages/carousel";
 import Footer from "./pages/footer";
 import Positioning from "./pages/positioning";
 import Register from "./components/user_auth/Register";
+import Login from "./components/user_auth/Login";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/footer" element={<Footer />} />
         <Route path="/positioning" element={<Positioning />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
 
         {/* Add other routes here */}
       </Routes>
