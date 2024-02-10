@@ -10,4 +10,4 @@ const router = express.Router();
 router.post("/login", LoginUser);
 router.post("/register", registerUser);
 router.get("/check_login", verifyToken);
-modules.export = router;
+module.exports = router;
