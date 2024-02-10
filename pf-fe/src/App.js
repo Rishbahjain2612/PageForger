@@ -8,7 +8,6 @@ import Carousel from "./pages/carousel";
 import Footer from "./pages/footer";
 import Positioning from "./pages/positioning";
 import Register from "./components/user_auth/Register";
-import Success from "./components/user_auth/Success";
 
 function App() {
   return (
@@ -24,7 +23,7 @@ function App() {
         <Route path="/footer" element={<Footer />} />
         <Route path="/positioning" element={<Positioning />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/next" element={<Success />} />
+
         {/* Add other routes here */}
       </Routes>
       {/* </div> */}
