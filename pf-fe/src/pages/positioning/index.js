@@ -18,34 +18,6 @@ const PositioningPage = () => {
     setSelectedElements(storedElements);
   }, [count]);
 
-//   const handleAddElement = (value, maxNum) => {
-//     if (maxNum === 0) {
-//       alert('Max number reached');
-//     } else {
-//       const edit = `el_ordered${count}`;
-//       maxNum--; // Decrement the max number
-//       const updatedElements = [...selectedElements, value];
-//       localStorage.setItem(edit, value);
-//       setCount(count + 1);
-//       localStorage.setItem('count', count + 1);
-//       setSelectedElements(updatedElements);
-//     }
-//   };
-
-//   const handleRemoveElement = (value) => {
-//     const maxNumParent = parseInt(document.getElementById(value).getAttribute('data-maxnum')) + 1;
-//     document.getElementById(value).setAttribute('data-maxnum', maxNumParent);
-
-//     const updatedElements = selectedElements.filter((el) => el !== value);
-
-//     // Remove from localStorage
-//     localStorage.removeItem(value);
-
-//     setCount(count - 1);
-//     localStorage.setItem('count', count - 1);
-//     setSelectedElements(updatedElements);
-//   };
-
   const handleRemoveElement = (value) => {
     const element = document.getElementById(value);
     
@@ -54,8 +26,6 @@ const PositioningPage = () => {
         document.getElementById(value).setAttribute('data-maxnum', maxNumParent);
 
     const updatedElements = selectedElements.filter((el) => el !== value);
-
-    // Remove from localStorage
     localStorage.removeItem(value);
 
     setCount(count - 1);
@@ -67,7 +37,7 @@ const PositioningPage = () => {
 };
 
   return (
-    <div className="main-container flex h-screen w-screen bg-orange-300 bg-cover bg-center bg-no-repeat">
+    <div className="main-container flex h-screen w-screen bg-cover bg-center bg-no-repeat">
       <div className="relative main m-5 h-5/6 w-5/6 self-center ">
         <div className="absolute h-full w-full opacity-60 bg-gray-400 rounded-3xl"></div>
         <div className="absolute h-full w-full inner-main">

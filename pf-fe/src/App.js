@@ -10,59 +10,27 @@ import Positioning from "./pages/positioning";
 import Register from "./components/user_auth/Register";
 import Login from "./components/user_auth/Login";
 
+
 function App() {
   return (
     <Router>
-      {/* <Navbar /> */}
-      {/* <div className="bg-lime-400 w-full"> */}
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/preview" element={<Preview />} />
-        <Route path="/navbars" element={<NavBarComponent />} />
-        <Route path="/cards" element={<Cards />} />
-        <Route path="/carousel" element={<Carousel />} />
-        <Route path="/footer" element={<Footer />} />
-        <Route path="/positioning" element={<Positioning />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-
-        {/* Add other routes here */}
-      </Routes>
-      {/* </div> */}
+      <Navbar />
+      <div className="w-full">
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/preview" element={<Preview />} />
+          <Route path="/navbars" element={<NavBarComponent />} />
+          <Route path="/cards" element={<Cards />} />
+          <Route path="/carousel" element={<Carousel />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/positioning" element={<Positioning />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
 
 export default App;
 
-// import Dashboard from "./pages/dashboard";
-// import Navbar from "./components/navbar";
-// import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-// import Preview from "./pages/preview"
-
-// function App() {
-
-//   const router = createBrowserRouter([
-//     {
-//       path: '/',
-//       element: <Dashboard />,
-//       errorElement: <div>404 Not Found</div>
-//     },
-//     {
-//       path: '/preview',
-//       element: <Preview />,
-//     }
-
-//   ])
-
-//   return (
-//     <>
-//       <Navbar />
-//       <div className="bg-lime-400 w-full">
-//         <RouterProvider router={router} />
-//       </div>
-//     </>
-//   );
-// }
-
-// export default App;
