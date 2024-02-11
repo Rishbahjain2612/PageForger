@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Smallmenu from './smallmenu'
@@ -11,13 +11,18 @@ function classNames(...classes) {
 
 export default function NavBarComponent() {
 
-  const [navigation, setNavigation] = useState([
-    { name: 'Dashboard', href: '#' },
-  ]);
+  const [navigation, setNavigation] = useState(() => {
+    // Retrieve the array from localStorage if available, otherwise use a default value
+    const storedNavigation = localStorage.getItem('navigation');
+    return storedNavigation ? JSON.parse(storedNavigation) : [{ name: 'Dashboard', href: '#' }];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('navigation', JSON.stringify(navigation));
+  }, [navigation]); // Update localStorage whenever navigation changes
 
   const handleSetTiles = (newTiles) => {
     setNavigation(newTiles);
-    localStorage.setItem("navbarUpdate", JSON.stringify(newTiles));
   };
 
   return (
