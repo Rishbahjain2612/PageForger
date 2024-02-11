@@ -10,13 +10,14 @@ function classNames(...classes) {
 }
 
 export default function NavBarComponent() {
-  
+
   const [navigation, setNavigation] = useState([
     { name: 'Dashboard', href: '#' },
   ]);
 
   const handleSetTiles = (newTiles) => {
     setNavigation(newTiles);
+    localStorage.setItem("navbarUpdate", JSON.stringify(newTiles));
   };
 
   return (
@@ -118,9 +119,9 @@ export default function NavBarComponent() {
         )}
       </Disclosure>
 
-      <HandleTiles tiles={navigation} setTiles={handleSetTiles}/>
-      
-    
+      <HandleTiles tiles={navigation} setTiles={handleSetTiles} />
+
+
     </>
 
   )
