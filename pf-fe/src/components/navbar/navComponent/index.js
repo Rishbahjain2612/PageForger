@@ -10,7 +10,7 @@ function NavComponent({ text, iconTag: Icon, linkPath }) {
         <Link to={linkPath}>
             <ListItem>
                 <ListItemPrefix>
-                    <Icon className="h-5 w-5" />
+                    <Icon/>
                 </ListItemPrefix>
                 {text}
             </ListItem>
