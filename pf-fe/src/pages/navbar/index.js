@@ -50,7 +50,7 @@ export default function NavBarComponent() {
 
   return (
     <>
-      <Disclosure as="nav" className="bg-gray-800 w-full">
+      <Disclosure as="nav" className="bg-gray-800 mx-3 mt-3">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-full px-2 sm:px-6 lg:px-8">
