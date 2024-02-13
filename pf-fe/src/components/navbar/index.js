@@ -18,7 +18,7 @@ import NavComponent from "./navComponent";
 export function Navbar() {
 
     return (
-        <Card className={`h-vh w-full md:w-[13vw] p-4 shadow-xl shadow-blue-gray-900/5 `}>
+        <Card className={`h-vh w-full md:w-[13vw] p-4 shadow-xl shadow-blue-gray-900/5`}>
             <div className="mb-2 flex items-center gap-2 py-4">
                 <img src="https://docs.material-tailwind.com/img/logo-ct-dark.png" alt="brand" className="h-8 w-8" />
                 <Typography variant="h5" color="blue-gray">
