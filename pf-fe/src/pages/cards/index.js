@@ -43,11 +43,11 @@ const CardForm = () => {
 
     useEffect(() => {
         const storedCards = JSON.parse(localStorage.getItem('cards'));
-        if (storedCards)
-        {
+        if (storedCards && storedCards.length > 0) {
             setCards(storedCards);
         }
     }, []);
+    
 
     useEffect(() => {
         localStorage.setItem('cards', JSON.stringify(cards));
