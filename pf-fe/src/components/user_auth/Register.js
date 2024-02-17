@@ -32,7 +32,7 @@ const Register = () => {
         formData
       );
       console.log(response.data);
-      //   navigate(`/login`);
+      navigate(`/login`);
     } catch (err) {
       console.log("err at Register");
     }
