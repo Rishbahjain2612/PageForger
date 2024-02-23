@@ -9,6 +9,7 @@ import Footer from "./pages/footer";
 import Positioning from "./pages/positioning";
 import Register from "./components/user_auth/Register";
 import Login from "./components/user_auth/Login";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                   <Route path="/carousel" element={<Carousel />} />
                   <Route path="/footer" element={<Footer />} />
                   <Route path="/positioning" element={<Positioning />} />
+                  <Route path="/profile" element={<Profile />} />
                 </Routes>
               </div>
             </>

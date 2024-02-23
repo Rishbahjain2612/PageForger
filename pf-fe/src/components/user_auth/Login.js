@@ -17,7 +17,7 @@ const Login = () => {
       try {
         await axios.post(
           "http://localhost:7000/api/users/check_login",
-          {},
+          formData,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -27,7 +27,7 @@ const Login = () => {
         // console.log("user logged in ");
         navigate("/");
       } catch (error) {
-        console.error("User is not logged in:", error);
+        console.error("User is not logged in:", error.response);
         // If token is not valid or user not logged in, remove the token
         setToken("");
         localStorage.removeItem("token");
