@@ -83,8 +83,27 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  const userId = req.body.userId;
+
+  try {
+    const user = await User.findById(userId, { password: 0 }); // Exclude password field
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Send user details (excluding password) in the response
+    res.status(200).json({ user: user.toObject({ getters: true }) });
+  } catch (error) {
+    console.error("Error finding user by ID:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   registerUser,
   LoginUser,
   verifyToken,
+  getUserById,
 };
