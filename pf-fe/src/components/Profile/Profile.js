@@ -7,41 +7,66 @@ const Profile = () => {
     name: "",
     email: "",
   });
+  const [password, setPassword] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post(
-          "http://localhost:7000/api/users/getdetails",
-          {
-            userId: localStorage.getItem("userId"),
-          }
-        );
-        setEditedData(response.data.user); // Assuming the response contains user data
-      } catch (err) {
-        console.error("Error fetching user details:", err);
-      }
-    };
-
     fetchData();
   }, []);
-  const handleInputChange = () => {
-    console.log("handleinputchange");
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:7000/api/users/getdetails",
+        {
+          userId: localStorage.getItem("userId"),
+        }
+      );
+      setEditedData(response.data.user);
+    } catch (err) {
+      console.error("Error fetching user details:", err);
+    }
   };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    // setEditedData({ ...userData });
+    setPassword("");
+    fetchData();
   };
 
-  const handleSaveClick = () => {
-    // Perform validation if needed before updating
-    // onUpdate(editedData);
-    setIsEditing(false);
+  const handleSaveClick = async () => {
+    try {
+      // const userPassword = prompt("Please enter your password:");
+      if (password === null || "") {
+        alert("please enter password");
+        return;
+      }
+      // if (password !== null) {
+
+      await axios.post("http://localhost:7000/api/users/update", {
+        userId: localStorage.getItem("userId"),
+        updatedData: editedData,
+        password: password,
+      });
+
+      setIsEditing(false);
+      setPassword("");
+      fetchData();
+    } catch (error) {
+      console.error("Error updating user details:", error);
+    }
   };
 
   return (
@@ -70,6 +95,16 @@ const Profile = () => {
                 onChange={handleInputChange}
               />
             </Form.Group>
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter your password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Group>
             <Button variant="success" onClick={handleSaveClick}>
               Save
             </Button>{" "}
@@ -79,19 +114,15 @@ const Profile = () => {
           </Form>
         ) : (
           <>
-            {editedData && (
-              <>
-                <Card.Text>
-                  <strong>Name:</strong> {editedData.name || ""}
-                </Card.Text>
-                <Card.Text>
-                  <strong>Email:</strong> {editedData.email || ""}
-                </Card.Text>
-                <Button variant="primary" onClick={handleEditClick}>
-                  Edit
-                </Button>
-              </>
-            )}
+            <Card.Text>
+              <strong>Name:</strong> {editedData.name || ""}
+            </Card.Text>
+            <Card.Text>
+              <strong>Email:</strong> {editedData.email || ""}
+            </Card.Text>
+            <Button variant="primary" onClick={handleEditClick}>
+              Edit
+            </Button>
           </>
         )}
       </Card.Body>
