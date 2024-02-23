@@ -101,9 +101,58 @@ const getUserById = async (req, res) => {
   }
 };
 
+const updateuser = async (re, res) => {
+  const { userId, updatedData, password } = re.body;
+  // console.log(password);
+
+  try {
+    const user = await User.findById(userId);
+    // console.log(user.password);
+    console.log(user.password, password);
+    if (!user) {
+      console.log("user not found");
+
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Verify the provided password
+    const isPasswordValid = await user.matchPassword(password);
+    console.log(isPasswordValid);
+    if (password != user.password) {
+      console.log("invalid password");
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    // Check if the new email already exists in the database
+    const existingUser = await User.findOne({
+      email: updatedData.email,
+      _id: { $ne: userId },
+    });
+
+    if (existingUser) {
+      return res.status(400).json({
+        error: "Email already exists. Please choose a different email.",
+      });
+    }
+
+    // Update user details
+    user.name = updatedData.name;
+    user.email = updatedData.email;
+
+    // Save the updated user to the database
+    await user.save();
+
+    res.json({ message: "User details updated successfully" });
+  } catch (error) {
+    console.error("Error updating user details:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   registerUser,
   LoginUser,
   verifyToken,
   getUserById,
+  updateuser,
 };
