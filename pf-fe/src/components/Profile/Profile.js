@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [editedData, setEditedData] = useState({
     name: "",
     email: "",
@@ -45,7 +47,10 @@ const Profile = () => {
     setPassword("");
     fetchData();
   };
-
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
   const handleSaveClick = async () => {
     try {
       // const userPassword = prompt("Please enter your password:");
@@ -53,7 +58,6 @@ const Profile = () => {
         alert("please enter password");
         return;
       }
-      // if (password !== null) {
 
       await axios.post("http://localhost:7000/api/users/update", {
         userId: localStorage.getItem("userId"),
@@ -73,6 +77,7 @@ const Profile = () => {
     <Card>
       <Card.Body>
         <Card.Title>User Profile</Card.Title>
+
         {isEditing ? (
           <Form>
             <Form.Group controlId="formName">
@@ -122,6 +127,9 @@ const Profile = () => {
             </Card.Text>
             <Button variant="primary" onClick={handleEditClick}>
               Edit
+            </Button>
+            <Button variant="danger" onClick={handleLogout} className="ml-2">
+              Logout
             </Button>
           </>
         )}
