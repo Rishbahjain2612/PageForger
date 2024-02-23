@@ -107,17 +107,15 @@ const updateuser = async (re, res) => {
 
   try {
     const user = await User.findById(userId);
-    // console.log(user.password);
-    console.log(user.password, password);
+
     if (!user) {
       console.log("user not found");
 
       return res.status(404).json({ error: "User not found" });
     }
-
+    // console.log(password, user.password);
     // Verify the provided password
-    const isPasswordValid = await user.matchPassword(password);
-    console.log(isPasswordValid);
+
     if (password != user.password) {
       console.log("invalid password");
       return res.status(401).json({ error: "Unauthorized" });
