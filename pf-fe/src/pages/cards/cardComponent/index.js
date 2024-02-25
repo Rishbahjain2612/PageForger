@@ -7,9 +7,9 @@ import {
     Button,
 } from "@material-tailwind/react";
 
-function CardComponent({imgLink, header, desc, buttonText}) {
+function CardComponent({ imgLink, header, desc, buttonText }) {
     return (
-        <Card className="mt-8 w-72 "> {/* Reduced width to w-72 */}
+        <Card className="w-72 mb-6"> {/* Reduced width to w-72 */}
             <CardHeader color="blue-gray" className="relative h-48 mt-6"> {/* Reduced height to h-48 */}
                 <img
                     src={imgLink}
@@ -22,7 +22,7 @@ function CardComponent({imgLink, header, desc, buttonText}) {
                     {header}
                 </Typography>
                 <Typography>
-                    {desc}   
+                    {desc}
                 </Typography>
             </CardBody>
             <CardFooter className="pt-0">

@@ -3,7 +3,7 @@ import { Carousel } from "@material-tailwind/react";
 
 function CarouselComponent({ imgLink1, imgLink2, imgLink3 }) {
     return (
-        <Carousel loop={true} className="rounded-xl w-full h-1/3 overflow-hidden">
+        <Carousel loop={true} className="rounded-xl mt-2 w-full h-1/3 overflow-hidden">
             <img
                 src={imgLink1}
                 alt=""
