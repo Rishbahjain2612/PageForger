@@ -9,7 +9,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function NavBarComponent() {
+export default function NavBarComponent({ showForms = true }) {
   const [navigation, setNavigation] = useState(() => {
     const storedNavigation = localStorage.getItem('navigation');
     return storedNavigation ? JSON.parse(storedNavigation) : [{ name: 'Dashboard', href: '#' }];
@@ -49,7 +49,7 @@ export default function NavBarComponent() {
 
   return (
     <>
-      <Disclosure as="nav" className="bg-gray-800 mx-3 mt-3">
+      <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-full px-2 sm:px-6 lg:px-8">
@@ -148,68 +148,71 @@ export default function NavBarComponent() {
         )}
       </Disclosure>
 
-      <div className="flex flex-wrap justify-center">
-        <div className="w-full lg:w-1/2">
-          <HandleTiles tiles={navigation} setTiles={setNavigation} className="my-4" />
-        </div>
-        <div className="w-full lg:w-1/2 flex flex-col items-center">
-          <div className="w-[80%] mx-auto mt-4">
-            <label htmlFor="showImages" className="block text-gray-700 text-sm font-bold mb-2">
-              Show Images
-            </label>
+
+      {showForms && (
+        <div className="flex flex-wrap justify-center">
+          <div className="w-full lg:w-1/2">
+            <HandleTiles tiles={navigation} setTiles={setNavigation} className="my-4" />
+          </div>
+          <div className="w-full lg:w-1/2 flex flex-col items-center">
+            <div className="w-[80%] mx-auto mt-4">
+              <label htmlFor="showImages" className="block text-gray-700 text-sm font-bold mb-2">
+                Show Images
+              </label>
 
 
 
-            <>
-              <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                {/* Form to change logo src */}
-                <input
-                  type="checkbox"
-                  id="showImages"
-                  checked={showImages}
-                  onChange={(e) => setShowImages(e.target.checked)}
-                  className="mr-2 leading-tight"
-                />
-                <label htmlFor="showImages">Check to add Logo Image</label>
+              <>
+                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                  {/* Form to change logo src */}
+                  <input
+                    type="checkbox"
+                    id="showImages"
+                    checked={showImages}
+                    onChange={(e) => setShowImages(e.target.checked)}
+                    className="mr-2 leading-tight"
+                  />
+                  <label htmlFor="showImages">Check to add Logo Image</label>
 
 
-                <label htmlFor="logoSrc" className="block text-gray-700 text-sm font-bold mt-4">Change Logo URL:</label>
-                <input
-                  type="text"
-                  id="logoSrc"
-                  value={logoSrc}
-                  onChange={(e) => setLogoSrc(e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </form>
+                  <label htmlFor="logoSrc" className="block text-gray-700 text-sm font-bold mt-4">Change Logo URL:</label>
+                  <input
+                    type="text"
+                    id="logoSrc"
+                    value={logoSrc}
+                    onChange={(e) => setLogoSrc(e.target.value)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </form>
 
-              {/* Form to change profile image src */}
-              <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                {/* Form to change profile image src */}
+                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
-                <input
-                  type="checkbox"
-                  id="showImages"
-                  checked={showProfileImages}
-                  onChange={(e) => setShowProfileImages(e.target.checked)}
-                  className="mr-2 leading-tight"
-                />
-                <label htmlFor="showImages">Check to add Profile Image</label>
-                <label htmlFor="profileImgSrc" className="block text-gray-700 text-sm font-bold mt-4">Change Profile Image URL:</label>
-                <input
-                  type="text"
-                  id="profileImgSrc"
-                  value={profileImgSrc}
-                  onChange={(e) => setProfileImgSrc(e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
+                  <input
+                    type="checkbox"
+                    id="showImages"
+                    checked={showProfileImages}
+                    onChange={(e) => setShowProfileImages(e.target.checked)}
+                    className="mr-2 leading-tight"
+                  />
+                  <label htmlFor="showImages">Check to add Profile Image</label>
+                  <label htmlFor="profileImgSrc" className="block text-gray-700 text-sm font-bold mt-4">Change Profile Image URL:</label>
+                  <input
+                    type="text"
+                    id="profileImgSrc"
+                    value={profileImgSrc}
+                    onChange={(e) => setProfileImgSrc(e.target.value)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
 
 
-              </form>
-            </>
+                </form>
+              </>
 
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

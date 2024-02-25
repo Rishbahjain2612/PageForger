@@ -15,7 +15,6 @@ function Positioning() {
         storedElements.push(element);
       }
     }
-
     setAddedElements(storedElements);
   }, []);
 

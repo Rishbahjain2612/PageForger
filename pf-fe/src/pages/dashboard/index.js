@@ -6,43 +6,44 @@ const Dashboard = () => {
   const [componentList, setComponentList] = useState([]);
 
   useEffect(() => {
-    // Retrieving elements from localStorage
-    let count = parseInt(localStorage.getItem("count")) || 0;
-    let components = [];
-    let items = [];
-
-    for (let i = 0; i < count; i++) {
-      let elID = `el_ordered${i}`;
-      let storedValue = localStorage.getItem(elID);
-
-      if (storedValue) {
-        items.push(storedValue);
-      }
-    }
-
-    setSelectedItems(items);
-
+    const tempList = [];
     for (let j = 0; j < localStorage.length; j++) {
       let component = localStorage.key(j);
-
-      if (component === "navbarData") {
-        components.push("Navbar");
-      } else if (component === "pricingData") {
-        components.push("Pricing");
-      } else if (component.startsWith("card")) {
-        components.push("Card");
-      } else if (component === "footerData") {
-        components.push("Footer");
+  
+      if (component === "navigation") {
+        tempList.push("Navbar");
+      } else if (component === "footerFormData") {
+        tempList.push("Footer");
+      } else if (component === "carouselFormData") {
+        tempList.push("Carousel");
+      } else if (component === "cards") {
+        tempList.push("Cards");
       }
     }
-
-    setComponentList(components);
+  
+    setComponentList(tempList);
   }, []);
-
+  
   const clearAll = () => {
     localStorage.clear();
-    window.location.reload();
+    setSelectedItems([]);
+    setComponentList([]);
   };
+
+  useEffect(() => {
+    const storedElements = [];
+    const count = parseInt(localStorage.getItem('count') || '0');
+
+    for (let i = 1; i <= count; i++)
+    {
+      const element = localStorage.getItem(`el_order(${i})`);
+      if (element)
+      {
+        storedElements.push(element);
+      }
+    }
+    setSelectedItems(storedElements);
+  }, []);
 
   return (
     <div className="relative m-5 p-4 h-[90%] w-[90%] self-center">
@@ -76,6 +77,7 @@ const Dashboard = () => {
               id="componentConatiner"
             >
               {/* Render components */}
+              
               {componentList.map((component, index) => (
                 <div
                   key={index}
@@ -84,6 +86,7 @@ const Dashboard = () => {
                   {component}
                 </div>
               ))}
+              
             </div>
           </div>
         </div>

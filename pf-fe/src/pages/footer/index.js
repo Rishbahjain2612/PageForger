@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FooterComponent from './footerComponent';
 
 function Footer() {
@@ -11,6 +11,13 @@ function Footer() {
         github: ''
     });
 
+    useEffect(() => {
+        const storedFormData = localStorage.getItem('footerFormData');
+        if (storedFormData) {
+            setFormData(JSON.parse(storedFormData));
+        }
+    }, []);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -21,7 +28,7 @@ function Footer() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        localStorage.setItem()
+        localStorage.setItem('footerFormData', JSON.stringify(formData));
     };
 
     return (
@@ -45,7 +52,7 @@ function Footer() {
                         onChange={handleChange}
                         className="w-full border border-gray-200 rounded-lg p-2 mb-2 focus:outline-none focus:ring focus:border-blue-300"
                     />
-                    <label htmlFor="twitter" className="block mb-2">Twitter URL:</label>
+                     <label htmlFor="twitter" className="block mb-2">Twitter URL:</label>
                     <input
                         type="text"
                         id="twitter"
@@ -90,6 +97,7 @@ function Footer() {
                         onChange={handleChange}
                         className="w-full border border-gray-200 rounded-lg p-2 mb-2 focus:outline-none focus:ring focus:border-blue-300"
                     />
+                    {/* Repeat similar inputs for other social media URLs */}
                     <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Submit</button>
                 </form>
             </div>
