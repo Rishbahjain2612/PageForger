@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Dashboard from "../../pages/dashboard";
 
 const Login = () => {
@@ -14,7 +14,8 @@ const Login = () => {
 
   useEffect(() => {
     const checkToken = async () => {
-      try {
+      try
+      {
         await axios.post(
           "https://pageforger.onrender.com/api/users/check_login",
           formData,
@@ -26,7 +27,8 @@ const Login = () => {
         );
         // console.log("user logged in ");
         navigate("/");
-      } catch (error) {
+      } catch (error)
+      {
         console.error("User is not logged in:", error.response);
         // If token is not valid or user not logged in, remove the token
         setToken("");
@@ -35,7 +37,8 @@ const Login = () => {
     };
 
     // Check token when the component mounts
-    if (token) {
+    if (token)
+    {
       checkToken();
     }
   }, [token]);
@@ -51,7 +54,8 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    try {
+    try
+    {
       const response = await axios.post(
         "https://pageforger.onrender.com/api/users/login",
         formData
@@ -62,7 +66,8 @@ const Login = () => {
       console.log(newToken);
       localStorage.setItem("token", newToken);
       console.log("user logged in ");
-    } catch (err) {
+    } catch (err)
+    {
       console.log("Error at Login:", err);
     }
   };
@@ -72,8 +77,8 @@ const Login = () => {
       {token ? (
         <Dashboard />
       ) : (
-        <Container>
-          <Form onSubmit={submitHandler}>
+        <Container className="mx-auto mt-8 p-4 max-w-md">
+          <Form onSubmit={submitHandler} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <Form.Group controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -81,6 +86,8 @@ const Login = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                placeholder="Email"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />
             </Form.Group>
@@ -92,13 +99,19 @@ const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
+                placeholder="Password"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />
             </Form.Group>
 
-            <Button type="submit" style={{ marginTop: "10px" }}>
+            <Button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 w-full">
               Submit
             </Button>
+
+            <p className="text-center mt-4">
+              Don't have an account? <Link to="/register" className="text-blue-500">Register</Link>
+            </p>
           </Form>
         </Container>
       )}

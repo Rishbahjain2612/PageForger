@@ -16,8 +16,6 @@ function App() {
     <Router>
       <Routes>
         {/* Routes without Navbar */}
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
 
         <Route
           path="/*"
@@ -26,6 +24,8 @@ function App() {
               <Navbar />
               <div className="w-full">
                 <Routes>
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
                   <Route index element={<Dashboard />} />
                   <Route path="/preview" element={<Preview />} />
                   <Route path="/navbars" element={<NavBarComponent />} />
