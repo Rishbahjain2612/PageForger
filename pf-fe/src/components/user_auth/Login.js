@@ -16,7 +16,7 @@ const Login = () => {
     const checkToken = async () => {
       try {
         await axios.post(
-          "http://localhost:7000/api/users/check_login",
+          "https://pageforger.onrender.com/api/users/check_login",
           formData,
           {
             headers: {
@@ -53,7 +53,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:7000/api/users/login",
+        "https://pageforger.onrender.com/api/users/login",
         formData
       );
       const newToken = response.data.token;
