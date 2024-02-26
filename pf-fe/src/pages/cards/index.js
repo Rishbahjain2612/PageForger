@@ -50,7 +50,11 @@ const CardForm = () => {
     
 
     useEffect(() => {
-        localStorage.setItem('cards', JSON.stringify(cards));
+        if (cards.length > 0) {
+            localStorage.setItem('cards', JSON.stringify(cards));
+        } else {
+            localStorage.removeItem('cards');
+        }
     }, [cards]);
 
     return (
