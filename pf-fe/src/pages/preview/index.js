@@ -19,26 +19,24 @@ function Preview() {
     const navigate = useNavigate();
 
     const handleSave = () => {
-        const jwtToken = localStorage.getItem("jwtToken");
-        if (!jwtToken)
-        {
-            navigate("/login");
-            return;
-        }
+        // const jwtToken = localStorage.getItem("jwtToken");
+        // if (!jwtToken)
+        // {
+        //     navigate("/login");
+        //     return;
+        // }
 
 
         const data = {};
-        for (let i = 1; i <= localStorage.count; i++)
-        {
-            const key = localStorage.key(i);
-            const value = localStorage.getItem(key);
-            if (value)
-            {
-                data[key] = value;
-            }
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        const value = localStorage.getItem(key);
+        if (value) {
+            data[key] = value;
         }
-        console.log(data); // You can use the 'data' object as needed
     }
+    console.log(data); // You can use the 'data' object as needed
+}
 
     return (
         <>
