@@ -31,7 +31,7 @@ const Register = () => {
     try
     {
       const response = await axios.post(
-        "http://localhost:7000/api/users/register",
+        "https://pageforger.onrender.com/api/users/register",
         formData
       );
       console.log(response.data);
