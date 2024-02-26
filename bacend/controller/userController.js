@@ -2,6 +2,8 @@ const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
+const bcrypt = require("bcrypt");
+
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -37,19 +39,28 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const LoginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
 
   try {
-    // Find user in the database based on email and password
-    const user = await User.findOne({ email, password });
+    // Find user in the database based on email
+    const user = await User.findOne({ email });
 
     if (user) {
-      // User found, generate JWT token
-      const token = jwt.sign({ email: user.email }, process.env.JWT_TOKEN, {
-        expiresIn: "15d",
-      });
-      const id = user._id;
-      res.json({ token, id });
-      console.log("log in ");
+      // Compare the provided password with the hashed password stored in the database
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+
+      if (isPasswordValid) {
+        // Passwords match, generate JWT token
+        const token = jwt.sign({ email: user.email }, process.env.JWT_TOKEN, {
+          expiresIn: "15d",
+        });
+        const id = user._id;
+        res.json({ token, id });
+        console.log("log in ");
+      } else {
+        // Passwords don't match, send 401 Unauthorized response
+        res.status(401).json({ error: "Invalid email or password" });
+      }
     } else {
       // User not found, send 401 Unauthorized response
       res.status(401).json({ error: "Invalid email or password" });
