@@ -13,6 +13,8 @@ import {
 import NavComponent from "./navComponent";
 
 export function Navbar() {
+  const isLoggedIn = !!localStorage.getItem("token"); // Check if the user is logged in
+
   return (
     <Card
       className={`w-full md:w-[13vw] p-4 shadow-xl shadow-blue-gray-900/5`}
@@ -62,12 +64,25 @@ export function Navbar() {
           linkPath="/positioning"
         />
 
-        <hr className="my-3 border-blue-gray-50 max-w-[10vw]" />
-        <NavComponent
-          text="Profile"
-          iconTag={ArchiveBoxIcon}
-          linkPath="/profile"
-        />
+        {isLoggedIn ? (
+          <>
+            <hr className="my-3 border-blue-gray-50 max-w-[10vw]" />
+            <NavComponent
+              text="Profile"
+              iconTag={ArchiveBoxIcon}
+              linkPath="/profile"
+            />
+          </>
+        ) : (
+          <>
+            <hr className="my-3 border-blue-gray-50 max-w-[10vw]" />
+            <NavComponent
+              text="Login"
+              iconTag={ArchiveBoxIcon}
+              linkPath="/login"
+            />
+          </>
+        )}
       </div>
     </Card>
   );
