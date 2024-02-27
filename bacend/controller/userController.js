@@ -1,7 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
-const data = require("../models/data");
+const Data = require("../models/data");
+// const data = require("../models/data");
 const bcrypt = require("bcrypt");
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -160,16 +161,41 @@ const updateuser = async (re, res) => {
 
 const savedata = async (req, res) => {
   const { userId, data } = req.body;
-
+  console.log(req.body);
   try {
-    const foundItem = await data.findOne({ userId: userId });
+    const foundItem = await Data.findOne({ userId });
 
     if (foundItem) {
+      const savedata = async (req, res) => {
+        const { userId, data } = req.body;
+        console.log(req.body);
+        try {
+          const foundItem = await Data.findOne({ userId });
+
+          if (foundItem) {
+            const updatedItem = await Data.findOneAndUpdate({ userId }, data);
+
+            console.log("Item found:", foundItem);
+            res.status(200).json({ updatedItem });
+          } else {
+            const newone = await Data.create({ userId, data });
+            // console.log("Item not found");
+            res.status(201).json({ foundItem });
+            // res.status(404).json({ message: "Item not found" });
+          }
+        } catch (error) {
+          console.error("Error searching for item:", error);
+          res.status(500).json({ error: "Internal Server Error" });
+        }
+      };
+
       console.log("Item found:", foundItem);
-      res.status(200).json({ foundItem });
+      res.status(200).json({ foundItem, message: "found" });
     } else {
-      console.log("Item not found");
-      res.status(404).json({ message: "Item not found" });
+      const newone = await Data.create({ userId, data });
+      // console.log("Item not found");
+      res.status(201).json({ foundItem });
+      // res.status(404).json({ message: "Item not found" });
     }
   } catch (error) {
     console.error("Error searching for item:", error);
