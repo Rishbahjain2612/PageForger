@@ -16,20 +16,51 @@ function Preview() {
   }
   const navigate = useNavigate();
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const jwtToken = localStorage.getItem("Token");
     if (!jwtToken) {
       const data = {};
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key == "token" || key == "userId") continue;
+        if (key == "token") continue;
         const value = localStorage.getItem(key);
         if (value) {
           data[key] = value;
         }
       }
-      console.log(data); // You can use the 'data' object as needed
-      //   navigate("/login");
+      let variable = JSON.stringify(data);
+
+      console.log(variable);
+      console.log(JSON.parse(variable));
+
+      try {
+        const response = await fetch(
+          "/api/users/savedata",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+          { userId: localStorage.getItem("userId"), data: variable }
+        );
+
+        if (!response.ok) {
+          throw new Error("Request failed");
+        }
+
+        const data = await response.json();
+
+        // Handle the data accordingly
+        if (data.foundItem) {
+          console.log("Item found:", data.foundItem);
+        } else {
+          console.log("Item not found");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+
       return;
     }
 
