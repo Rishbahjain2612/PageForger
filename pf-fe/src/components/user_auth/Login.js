@@ -14,8 +14,7 @@ const Login = () => {
 
   useEffect(() => {
     const checkToken = async () => {
-      try
-      {
+      try {
         await axios.post(
           "https://pageforger.onrender.com/api/users/check_login",
           formData,
@@ -25,10 +24,10 @@ const Login = () => {
             },
           }
         );
+
         // console.log("user logged in ");
         navigate("/");
-      } catch (error)
-      {
+      } catch (error) {
         console.error("User is not logged in:", error.response);
         // If token is not valid or user not logged in, remove the token
         setToken("");
@@ -37,8 +36,7 @@ const Login = () => {
     };
 
     // Check token when the component mounts
-    if (token)
-    {
+    if (token) {
       checkToken();
     }
   }, [token]);
@@ -54,20 +52,25 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    try
-    {
+    try {
       const response = await axios.post(
         "https://pageforger.onrender.com/api/users/login",
         formData
       );
       const newToken = response.data.token;
       localStorage.setItem("userId", response.data.id);
+      const saved_data = await axios.get(
+        "https://pageforger.onrender.com/api/users/get",
+        { userId: localStorage.getItem("userId") }
+      );
+      // here to render data into localStorage after getting data with userId is also included into saved_data
+
+      console.log(saved_data);
       setToken(newToken);
       console.log(newToken);
       localStorage.setItem("token", newToken);
       console.log("user logged in ");
-    } catch (err)
-    {
+    } catch (err) {
       console.log("Error at Login:", err);
     }
   };
@@ -78,7 +81,10 @@ const Login = () => {
         <Dashboard />
       ) : (
         <Container className="mx-auto mt-8 p-4 max-w-md">
-          <Form onSubmit={submitHandler} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <Form
+            onSubmit={submitHandler}
+            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          >
             <Form.Group controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -105,12 +111,18 @@ const Login = () => {
               />
             </Form.Group>
 
-            <Button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 w-full">
+            <Button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 w-full"
+            >
               Submit
             </Button>
 
             <p className="text-center mt-4">
-              Don't have an account? <Link to="/register" className="text-blue-500">Register</Link>
+              Don't have an account?{" "}
+              <Link to="/register" className="text-blue-500">
+                Register
+              </Link>
             </p>
           </Form>
         </Container>
