@@ -17,6 +17,6 @@ router.post("/check_login", verifyToken);
 router.post("/getdetails", getUserById);
 router.post("/update", updateuser);
 router.post("/post", savedata);
-router.get("/get", getdata);
+router.post("/get", getdata);
 
 module.exports = router;
