@@ -4,6 +4,7 @@ import NavbarHandel from "./navbarHanndeler";
 import CardHandeler from "./cardsHandel";
 import CarouselHandeler from "./carouselHandel";
 import FooterHandeler from "./footerHandel";
+import axios from "axios";
 
 function Preview() {
   const elements = [];
@@ -32,31 +33,22 @@ function Preview() {
 
       console.log(variable);
       console.log(JSON.parse(variable));
-
+      if (
+        localStorage.getItem("userId") === null ||
+        localStorage.getItem("userId") === ""
+      ) {
+        alert("!please login first");
+        navigate("/login");
+      }
       try {
-        const response = await fetch(
-          "/api/users/savedata",
+        const result = await axios.post(
+          "https://pageforger.onrender.com/api/users/post",
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          },
-          { userId: localStorage.getItem("userId"), data: variable }
+            userId: localStorage.getItem("userId"),
+            data: variable,
+          }
         );
-
-        if (!response.ok) {
-          throw new Error("Request failed");
-        }
-
-        const data = await response.json();
-
-        // Handle the data accordingly
-        if (data.foundItem) {
-          console.log("Item found:", data.foundItem);
-        } else {
-          console.log("Item not found");
-        }
+        console.log(result.data.foundItem);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
