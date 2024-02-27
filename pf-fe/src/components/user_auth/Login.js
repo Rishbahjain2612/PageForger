@@ -59,13 +59,22 @@ const Login = () => {
       );
       const newToken = response.data.token;
       localStorage.setItem("userId", response.data.id);
-      const saved_data = await axios.get(
-        "https://pageforger.onrender.com/api/users/get",
-        { userId: localStorage.getItem("userId") }
+      const dataToSend = {
+        userId: localStorage.getItem("userId"),
+      };
+      const saved_data = await axios.post(
+        "http://localhost:7000/api/users/get",
+        dataToSend
       );
-      // here to render data into localStorage after getting data with userId is also included into saved_data
-      // if bool is 0 then data  there is nothing data in it if  1 then store data in localStorage
-      console.log(saved_data);
+
+      let data = JSON.parse(saved_data.data.foundItem.data);
+      console.log(data);
+      // console.log(data);
+      // console.log("length", data.length);
+      for (const key in data) {
+        localStorage.setItem(key, data[key]);
+        // for setting localStorage item in browser bacend data
+      }
       setToken(newToken);
       console.log(newToken);
       localStorage.setItem("token", newToken);

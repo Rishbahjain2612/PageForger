@@ -23,7 +23,7 @@ function Preview() {
       const data = {};
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key == "token") continue;
+        if (key == "token" || key == "userId") continue;
         const value = localStorage.getItem(key);
         if (value) {
           data[key] = value;
@@ -48,7 +48,8 @@ function Preview() {
             data: variable,
           }
         );
-        console.log(result.data.foundItem);
+        // console.log(result.data.foundItem);
+        alert("user data is saved successfully!");
       } catch (error) {
         console.error("Error fetching data:", error);
       }

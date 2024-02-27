@@ -9,7 +9,7 @@ const Dashboard = () => {
     const tempList = [];
     for (let j = 0; j < localStorage.length; j++) {
       let component = localStorage.key(j);
-  
+
       if (component === "navigation") {
         tempList.push("Navbar");
       } else if (component === "footerFormData") {
@@ -20,25 +20,27 @@ const Dashboard = () => {
         tempList.push("Cards");
       }
     }
-  
+
     setComponentList(tempList);
   }, []);
-  
+
   const clearAll = () => {
+    let data = localStorage.getItem("userId");
+    let token = localStorage.getItem("token");
     localStorage.clear();
+    localStorage.setItem("userId", data);
+    localStorage.setItem("token", token);
     setSelectedItems([]);
     setComponentList([]);
   };
 
   useEffect(() => {
     const storedElements = [];
-    const count = parseInt(localStorage.getItem('count') || '0');
+    const count = parseInt(localStorage.getItem("count") || "0");
 
-    for (let i = 1; i <= count; i++)
-    {
+    for (let i = 1; i <= count; i++) {
       const element = localStorage.getItem(`el_order(${i})`);
-      if (element)
-      {
+      if (element) {
         storedElements.push(element);
       }
     }
@@ -77,7 +79,7 @@ const Dashboard = () => {
               id="componentConatiner"
             >
               {/* Render components */}
-              
+
               {componentList.map((component, index) => (
                 <div
                   key={index}
@@ -86,7 +88,6 @@ const Dashboard = () => {
                   {component}
                 </div>
               ))}
-              
             </div>
           </div>
         </div>
