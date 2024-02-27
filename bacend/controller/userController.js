@@ -203,6 +203,23 @@ const savedata = async (req, res) => {
   }
 };
 
+const getdata = async (req, res) => {
+  const { userId } = req.body;
+  console.log(req.body);
+  try {
+    const foundItem = await Data.findOne({ userId });
+
+    if (foundItem) {
+      res.status(201).json({ foundItem, bool: 1 });
+    } else {
+      res.status(201).json({ message: "no item", bool: 0 });
+    }
+  } catch (error) {
+    console.error("Error searching for item:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   registerUser,
   LoginUser,
@@ -210,4 +227,5 @@ module.exports = {
   getUserById,
   updateuser,
   savedata,
+  getdata,
 };
