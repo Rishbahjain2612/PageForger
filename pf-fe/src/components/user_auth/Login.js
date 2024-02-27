@@ -63,7 +63,7 @@ const Login = () => {
         userId: localStorage.getItem("userId"),
       };
       const saved_data = await axios.post(
-        "http://localhost:7000/api/users/get",
+        "https://pageforger.onrender.com/api/users/get",
         dataToSend
       );
 
