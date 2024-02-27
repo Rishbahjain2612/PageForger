@@ -64,7 +64,7 @@ const Login = () => {
         { userId: localStorage.getItem("userId") }
       );
       // here to render data into localStorage after getting data with userId is also included into saved_data
-
+      // if bool is 0 then data  there is nothing data in it if  1 then store data in localStorage
       console.log(saved_data);
       setToken(newToken);
       console.log(newToken);
