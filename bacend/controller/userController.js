@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
-
+const data = require("../models/data");
 const bcrypt = require("bcrypt");
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -158,10 +158,30 @@ const updateuser = async (re, res) => {
   }
 };
 
+const savedata = async (req, res) => {
+  const { userId, data } = req.body;
+
+  try {
+    const foundItem = await data.findOne({ userId: userId });
+
+    if (foundItem) {
+      console.log("Item found:", foundItem);
+      res.status(200).json({ foundItem });
+    } else {
+      console.log("Item not found");
+      res.status(404).json({ message: "Item not found" });
+    }
+  } catch (error) {
+    console.error("Error searching for item:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   registerUser,
   LoginUser,
   verifyToken,
   getUserById,
   updateuser,
+  savedata,
 };
