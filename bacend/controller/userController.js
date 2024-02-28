@@ -125,10 +125,13 @@ const updateuser = async (re, res) => {
 
       return res.status(404).json({ error: "User not found" });
     }
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    // console.log(passwordMatch);
     // console.log(password, user.password);
+
     // Verify the provided password
 
-    if (password != user.password) {
+    if (!passwordMatch) {
       console.log("invalid password");
       return res.status(401).json({ error: "Unauthorized" });
     }
