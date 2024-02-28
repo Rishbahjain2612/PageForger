@@ -71,9 +71,14 @@ const Login = () => {
       console.log(data);
       // console.log(data);
       // console.log("length", data.length);
-      for (const key in data) {
-        localStorage.setItem(key, data[key]);
-        // for setting localStorage item in browser bacend data
+
+      // Check if data is not empty
+      if (Object.keys(data).length !== 0) {
+        // If data is not empty, proceed with the loop
+        for (const key in data) {
+          localStorage.setItem(key, data[key]);
+          // for setting localStorage item in browser backend data
+        }
       }
       setToken(newToken);
       console.log(newToken);
