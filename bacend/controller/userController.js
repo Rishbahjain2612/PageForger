@@ -126,7 +126,7 @@ const updateuser = async (re, res) => {
       return res.status(404).json({ error: "User not found" });
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
-    // console.log(passwordMatch);
+    console.log(passwordMatch);
     // console.log(password, user.password);
 
     // Verify the provided password
@@ -161,7 +161,6 @@ const updateuser = async (re, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 const savedata = async (req, res) => {
   const { userId, data } = req.body;
   console.log(req.body);
@@ -169,36 +168,19 @@ const savedata = async (req, res) => {
     const foundItem = await Data.findOne({ userId });
 
     if (foundItem) {
-      const savedata = async (req, res) => {
-        const { userId, data } = req.body;
-        console.log(req.body);
-        try {
-          const foundItem = await Data.findOne({ userId });
-
-          if (foundItem) {
-            const updatedItem = await Data.findOneAndUpdate({ userId }, data);
-
-            console.log("Item found:", foundItem);
-            res.status(200).json({ updatedItem });
-          } else {
-            const newone = await Data.create({ userId, data });
-            // console.log("Item not found");
-            res.status(201).json({ foundItem });
-            // res.status(404).json({ message: "Item not found" });
-          }
-        } catch (error) {
-          console.error("Error searching for item:", error);
-          res.status(500).json({ error: "Internal Server Error" });
-        }
-      };
-
+      // Update the existing item
+      const updatedItem = await Data.findOneAndUpdate(
+        { userId },
+        { data },
+        { new: true }
+      );
       console.log("Item found:", foundItem);
-      res.status(200).json({ foundItem, message: "found" });
+      console.log("Updated:", updatedItem);
+      res.status(200).json({ updatedItem });
     } else {
-      const newone = await Data.create({ userId, data });
-      // console.log("Item not found");
-      res.status(201).json({ foundItem });
-      // res.status(404).json({ message: "Item not found" });
+      // Create a new item if not found
+      const newOne = await Data.create({ userId, data });
+      res.status(201).json({ newOne });
     }
   } catch (error) {
     console.error("Error searching for item:", error);
