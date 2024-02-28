@@ -66,18 +66,20 @@ const Login = () => {
         "https://pageforger.onrender.com/api/users/get",
         dataToSend
       );
+      console.log(saved_data);
+      if (saved_data.data.bool == 1) {
+        let data = JSON.parse(saved_data.data.foundItem.data);
+        console.log(data);
+        // console.log(data);
+        // console.log("length", data.length);
 
-      let data = JSON.parse(saved_data.data.foundItem.data);
-      console.log(data);
-      // console.log(data);
-      // console.log("length", data.length);
-
-      // Check if data is not empty
-      if (Object.keys(data).length !== 0) {
-        // If data is not empty, proceed with the loop
-        for (const key in data) {
-          localStorage.setItem(key, data[key]);
-          // for setting localStorage item in browser backend data
+        // Check if data is not empty
+        if (Object.keys(data).length !== 0) {
+          // If data is not empty, proceed with the loop
+          for (const key in data) {
+            localStorage.setItem(key, data[key]);
+            // for setting localStorage item in browser backend data
+          }
         }
       }
       setToken(newToken);

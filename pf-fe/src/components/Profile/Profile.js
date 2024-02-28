@@ -19,12 +19,13 @@ const Profile = () => {
   const fetchData = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:7000/api/users/getdetails",
+        "https://pageforger.onrender.com/api/users/getdetails",
         {
           userId: localStorage.getItem("userId"),
         }
       );
       setEditedData(response.data.user);
+      console.log(response.data.user);
     } catch (err) {
       console.error("Error fetching user details:", err);
     }
@@ -59,7 +60,7 @@ const Profile = () => {
         return;
       }
 
-      await axios.post("http://localhost:7000/api/users/update", {
+      await axios.post("https://pageforger.onrender.com/api/users/update", {
         userId: localStorage.getItem("userId"),
         updatedData: editedData,
         password: password,
