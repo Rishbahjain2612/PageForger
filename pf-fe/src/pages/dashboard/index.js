@@ -104,11 +104,11 @@ const Dashboard = () => {
               Preview Page
             </button>
           </Link>
-          <a href="positioning.html">
+          <Link to="/positioning">
             <button className="bg-orange-400 h-full w-full rounded-xl border-2 border-orange-700">
               EDIT
             </button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
